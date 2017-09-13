@@ -1,0 +1,10 @@
+{
+  "name": "campaign.core",
+  "version": "0.0.1-1",
+  "author": "jixiu",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seven1986/campaign.git"
+  }
+}
