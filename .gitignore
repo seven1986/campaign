@@ -2,3 +2,4 @@ core/.gitignore
 core/.swagger-codegen-ignore
 core/git_push.sh
 core/.swagger-codegen/VERSION
+core/npm-debug.log
