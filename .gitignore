@@ -3,3 +3,7 @@ core/.swagger-codegen-ignore
 core/git_push.sh
 core/.swagger-codegen/VERSION
 core/npm-debug.log
+/core/node_modules
+/core/dist
+/core/typings
+/.vs

@@ -1,18 +1,14 @@
 {
-  "name": "campaign.core",
-  "version": "0.0.1-5",
-  "description": "swagger client for campaign.core",
+  "name": "campaign.game",
+  "version": "0.0.2-preview-1",
+  "description": "client for campaign.game",
   "author": "Swagger Codegen Contributors",
   "keywords": [
-    "swagger-client"
+    "campaign.game-client"
   ],
-  "license": "Apache-2.0",
+  "license": "Unlicense",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "scripts": {
-    "build": "typings install && tsc --outDir dist/",
-    "postinstall": "npm run build"
-  },
   "peerDependencies": {
     "@angular/core": "^2.0.0-rc.5",
     "@angular/http": "^2.0.0-rc.5",
@@ -35,8 +31,5 @@
     "zone.js": "^0.6.17",  
     "typescript": "^1.8.10",
     "typings": "^1.3.2"
-  },
-  "publishConfig":{
-    "registry":"https://github.com/seven1986/campaign"
   }
 }
