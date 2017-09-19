@@ -24,25 +24,37 @@
 
 import * as models from './models';
 
-export interface WechatUserInfo {
-    openid?: string;
+export interface GameInstance {
+    instanceId?: number;
 
-    nickname?: string;
+    gameId?: string;
 
-    sex?: number;
+    instanceType?: number;
 
-    province?: string;
+    instanceName?: string;
 
-    city?: string;
+    instanceDetails?: string;
 
-    country?: string;
+    instanceRules?: string;
 
-    headimgurl?: string;
+    instanceInstructions?: string;
 
-    unionid?: string;
+    status?: number;
 
-    errcode?: number;
+    startDate?: Date;
 
-    errmsg?: string;
+    endDate?: Date;
+
+    createDate?: Date;
+
+    createUser?: string;
+
+    updateDate?: Date;
+
+    updateUser?: string;
+
+    isDeleted?: boolean;
+
+    isApproved?: boolean;
 
 }

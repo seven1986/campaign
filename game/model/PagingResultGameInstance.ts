@@ -24,22 +24,12 @@
 
 import * as models from './models';
 
-export interface WechatUserInfo {
-    openid?: string;
+export interface PagingResultGameInstance {
+    dataArray?: Array<models.GameInstance>;
 
-    nickname?: string;
+    total?: number;
 
-    sex?: number;
-
-    province?: string;
-
-    city?: string;
-
-    country?: string;
-
-    headimgurl?: string;
-
-    unionid?: string;
+    skip?: number;
 
     errcode?: number;
 
