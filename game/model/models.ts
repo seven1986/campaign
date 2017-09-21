@@ -3,6 +3,7 @@ export * from './CommentModel';
 export * from './FaceComparison';
 export * from './GameImage';
 export * from './GameInstance';
+export * from './GameInstanceModel';
 export * from './GameList';
 export * from './GeneralRankingModel';
 export * from './IntResult';

@@ -24,38 +24,27 @@
 
 import * as models from './models';
 
-/**
- * 提交海报数据
- */
-export interface StatisticDataEntity {
-    /**
-     * 用户的AppUserId
-     */
-    userId?: string;
+export interface GameInstanceModel {
+    instanceType?: number;
 
-    /**
-     * Base64海报图  格式如：data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wB....
-     */
-    img?: string;
+    instanceName?: string;
 
-    /**
-     * 微信的用户OpenID
-     */
-    openid?: string;
+    instanceDetails?: string;
 
-    /**
-     * 微信的用户昵称
-     */
-    nickname?: string;
+    instanceRules?: string;
 
-    /**
-     * 微信的用户头像
-     */
-    headimgurl?: string;
+    instanceInstructions?: string;
 
-    /**
-     * 微信的用户国家
-     */
-    country?: string;
+    status?: number;
+
+    startDate?: Date;
+
+    endDate?: Date;
+
+    images?: Array<models.GameImage>;
+
+    errcode?: number;
+
+    errmsg?: string;
 
 }
