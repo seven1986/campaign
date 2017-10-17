@@ -1,0 +1,36 @@
+import { Http, Headers } from '@angular/http';
+import { Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import * as models from '../model/models';
+import { Configuration } from '../configuration';
+export declare class CampaignCoreApi {
+    protected http: Http;
+    protected basePath: string;
+    defaultHeaders: Headers;
+    configuration: Configuration;
+    constructor(http: Http, basePath: string, configuration: Configuration);
+    private extendObj<T1, T2>(objA, objB);
+    apiFaceRecognitionComment(commentModel?: models.CommentModel, extraHttpRequestParams?: any): Observable<models.BoolResult>;
+    apiFaceRecognitionComments(comparisonId?: string, take?: number, skip?: number, extraHttpRequestParams?: any): Observable<models.PagingResultCommentModel>;
+    apiFaceRecognitionComparison(comparisonId?: string, extraHttpRequestParams?: any): Observable<models.FaceComparison>;
+    apiFaceRecognitionComparisonList(take?: number, skip?: number, extraHttpRequestParams?: any): Observable<models.PagingResultFaceComparison>;
+    apiFaceRecognitionFaceComparison(userId?: string, openId?: string, nickName?: string, headerImgUrl?: string, country?: string, comparisonId?: string, confidence?: number, commentCount?: number, ranking?: number, img1Url?: string, img2Url?: string, errcode?: number, errmsg?: string, extraHttpRequestParams?: any): Observable<models.FaceComparison>;
+    apiGeneralGetRanking(partition?: string, skip?: number, take?: number, extraHttpRequestParams?: any): Observable<models.PagingResultGeneralRankingModel>;
+    apiGeneralInsertRanking(appuserid?: string, openid?: string, nickname?: string, headimgurl?: string, score?: number, partition?: string, extraHttpRequestParams?: any): Observable<models.BoolResult>;
+    apiPosterGet(extraHttpRequestParams?: any): Observable<models.IntResult>;
+    apiPosterPost(statisticDataEntity?: models.StatisticDataEntity, extraHttpRequestParams?: any): Observable<models.BoolResult>;
+    apiWechatCustomShare(appTag?: number, url?: string, extraHttpRequestParams?: any): Observable<models.WechatCustomShare>;
+    apiWechatUserInfo(appTag?: number, code?: string, extraHttpRequestParams?: any): Observable<models.WechatUserInfo>;
+    apiFaceRecognitionCommentWithHttpInfo(commentModel?: models.CommentModel, extraHttpRequestParams?: any): Observable<Response>;
+    apiFaceRecognitionCommentsWithHttpInfo(comparisonId?: string, take?: number, skip?: number, extraHttpRequestParams?: any): Observable<Response>;
+    apiFaceRecognitionComparisonWithHttpInfo(comparisonId?: string, extraHttpRequestParams?: any): Observable<Response>;
+    apiFaceRecognitionComparisonListWithHttpInfo(take?: number, skip?: number, extraHttpRequestParams?: any): Observable<Response>;
+    apiFaceRecognitionFaceComparisonWithHttpInfo(userId?: string, openId?: string, nickName?: string, headerImgUrl?: string, country?: string, comparisonId?: string, confidence?: number, commentCount?: number, ranking?: number, img1Url?: string, img2Url?: string, errcode?: number, errmsg?: string, extraHttpRequestParams?: any): Observable<Response>;
+    apiGeneralGetRankingWithHttpInfo(partition?: string, skip?: number, take?: number, extraHttpRequestParams?: any): Observable<Response>;
+    apiGeneralInsertRankingWithHttpInfo(appuserid?: string, openid?: string, nickname?: string, headimgurl?: string, score?: number, partition?: string, extraHttpRequestParams?: any): Observable<Response>;
+    apiPosterGetWithHttpInfo(extraHttpRequestParams?: any): Observable<Response>;
+    apiPosterPostWithHttpInfo(statisticDataEntity?: models.StatisticDataEntity, extraHttpRequestParams?: any): Observable<Response>;
+    apiWechatCustomShareWithHttpInfo(appTag?: number, url?: string, extraHttpRequestParams?: any): Observable<Response>;
+    apiWechatUserInfoWithHttpInfo(appTag?: number, code?: string, extraHttpRequestParams?: any): Observable<Response>;
+}
