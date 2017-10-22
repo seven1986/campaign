@@ -1,0 +1,382 @@
+﻿
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-controller="AppController" ng-cloak>
+    <div class="container-fluid">
+        <div class="form-row align-items-center">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-9">
+                <div class="input-group mb-2 mb-sm-0">
+                    <div class="input-group-addon">Open API</div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup" ng-model="OpenAPI">
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary" ng-click="LoadDoc()">加载文档</button>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <hr />
+
+        <div class="form-row">
+            <div class="col-2">
+                <div class="form-row" ng-if="doc.paths!=null">
+                    <div class="col-12">
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link" href="#" ng-click="gen('ng2')">SDK for Angular 2+</a></li>
+                            <li class="nav-item"><a class="nav-link disabled" href="#">SDK for Angular 1</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#" ng-click="gen('jquery')">SDK for jQuery</a></li>
+                        </ul>
+                        <hr />
+                        <div>
+                            <small>已选API({{clientMethods.length}})</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="card-columns" onselect="return false" ng-click="refreshApiMethod()">
+                    <div class="card border-primary mb-3" style="max-width: 20rem;" ng-repeat="(key, value) in doc.paths">
+                        <div class="card-header">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input apigroup" checked="checked" ng-click="ChooseApiGroup($event.currentTarget.checked,$index)">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">{{key}}</span>
+                            </label>
+                        </div>
+                        <div class="card-body">
+                            <dl>
+                                <dd ng-repeat="(key2, value2) in doc.paths[key]">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input apimethod" checked="checked" value="{{key}}/{{key2}}">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">{{key2}} <i class="octicon-issue-opened" data-toggle="popover" data-placement="top" data-content='{{value2.description?"<h6>"+value2.description+"</h6><hr/>":""}}<p>请求参数：<br />{{value2.parameters | paramsStr}}</p>'>❔</i></span>
+                                    </label>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sdkModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Download Client SDK</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <pre id="fnStr" style="height:300px; overflow:scroll"></pre>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.6.6/angular.min.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.6.6/angular-sanitize.min.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.6.6/angular-route.min.js"></script>
+<script type="text/javascript">
+    var app = angular.module("app", []);
+
+    app.filter('paramsStr', function () {
+        return function (parameters) {
+            if (parameters && parameters.length > 0)
+                return parameters.map(x => `${x.name} - (${x.type})`).join('<br/>');
+        }
+    });
+
+    app.controller("AppController", function ($scope, $timeout) {
+
+        $scope.doc = { basePath: '' };
+
+        $scope.clientMethods = [];
+
+        $scope.OpenAPI = 'https://portal.ixingban.com/docs/services/59bb77588826900268c9dfe4/export?DocumentFormat=Swagger';
+
+        // 加载openapi 文档
+        $scope.LoadDoc = function () {
+            $.getJSON($scope.OpenAPI).then(doc => {
+                $timeout(() => {
+                    $scope.doc = doc;
+                }, 1)
+
+
+                setTimeout(() => {
+                    $('[data-toggle="popover"]').popover({
+                        container: 'body',
+                        html: true
+                    });
+
+                    $scope.refreshApiMethod();
+
+                }, 300);
+            });
+        }
+
+        // 生成sdk
+        $scope.gen = function (lan) {
+
+            $scope.clientMethods = $.map($('.apimethod:checked'), x => x.value);
+
+            var code = "";
+
+            if (lan == 'ng2') {
+                code = $scope.gen_angular2();
+            }
+
+            if (lan == 'jquery') {
+                code = $scope.gen_jquery();
+            }
+
+            $('#fnStr').text(code);
+
+            $('#sdkModal').modal('show');
+        }
+
+        // 刷新选择的API集合
+        $scope.refreshApiMethod = function () {
+            $timeout(() => {
+                $scope.clientMethods = $.map($('.apimethod:checked'), x => x.value);
+            }, 1);
+        }
+
+        // 根据分组批量选中/取消选中 API
+        $scope.ChooseApiGroup = function (isChecked, ind) {
+            var cks = $('.card-body:eq(' + ind + ') :checkbox');
+
+            for (let i = 0; i < cks.length; i++) {
+                cks[i].checked = isChecked
+            }
+        }
+
+        // 生成angular2 SDK
+        $scope.gen_angular2 = function () {
+
+            let doc = $scope.doc;
+
+            var sdkName = doc.info.title.replace(/\./g, "") + 'Client';
+
+            var fns = [];
+
+            var paths = Object.keys(doc.paths);
+
+            paths.forEach(path => {
+
+                let requestUrl = path;
+
+                let pathParams = [];
+
+                if (path.indexOf('{') > 0) {
+
+                    requestUrl = path.replace(/\{/g, '${');
+
+                    pathParams = requestUrl.split('$').filter(x => x.indexOf('{') > -1);
+                }
+
+                var methods = Object.keys(doc.paths[path]);
+
+                methods.forEach(method => {
+
+                    let k = `${path}/${method}`;
+
+                    if ($.inArray(k, $scope.clientMethods) < 0) { return; }
+
+                    let operation = doc.paths[path][method];
+
+                    let methodName = operation.operationId.replace(/\//g, '');
+
+                    let methodParams = [];
+
+                    let httpParams = [];
+
+                    if (operation.parameters != null && operation.parameters.length > 0) {
+
+                        methodParams = operation.parameters.map(x => x.name);
+
+                        methodParams.filter(x => {
+                            let isPathParamater = pathParams.filter(pp => pp.indexOf('{' + x + '}') > -1).length > 0;
+
+                            if (!isPathParamater) {
+                                httpParams.push(x);
+                            }
+                        })
+                    }
+
+                    let fn = `    public ${methodName}(${methodParams.length > 0 ? methodParams.join("?,") + '?' : ''}): Observable<any> {\r\n`;
+
+                    fn += '      const path = `${this.basePath}' + requestUrl + '`;\r\n';
+
+                    if (httpParams.length > 0) {
+
+                        // GET 请求
+                        if (method == 'get') {
+
+                            fn += `      let requestParams = new HttpParams();\r\n`;
+
+                            httpParams.forEach(p => {
+                                fn += `      if (${p} !== undefined) { requestParams = requestParams.set('${p}', <any>${p});}\r\n`;
+                            })
+
+                            fn += `      let options = { params: requestParams }\n`;
+                        }
+                        // PUT/DELETE/POST 请求
+                        else {
+                            fn += `      let requestParams = {};\r\n`;
+
+                            httpParams.forEach(p => {
+                                fn += `      if (${p} !== undefined) { requestParams["${p}"]=${p}; }\r\n`;
+                            })
+
+                            fn += `      let options = { body: requestParams }\n`;
+                        }
+
+                        fn += `      return this.http.${method}(path, options);`;
+                    }
+
+                    else {
+                        fn += `      return this.http.${method}(path);`;
+                    }
+
+                    fn += ` \r\n    }`;
+
+                    if (method == 'post' || method == 'put') {
+                        fn += `\r\n\r\n    public ${methodName}WithModel(model:any): Observable<any> {\r\n`;
+
+                        fn += '      const path = `${this.basePath}' + requestUrl + '`;\r\n';
+
+                        fn += `      return this.http.${method}(path, { body: model });`;
+
+                        fn += ` \r\n    }`;
+                    }
+
+
+                    fns.push(fn);
+                });
+            });
+
+            var fnStr = `
+// 需要配置angular4+ inersector使用
+import {Injectable }  from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+
+@Injectable()
+export class ${sdkName} {
+    public basePath:string = '${$scope.doc.basePath}';
+    constructor(protected http: HttpClient){
+    }\r\n\r\n`+
+                fns.join('\n\n') +
+                `\r\n }`;
+
+            return fnStr;
+        }
+
+        // 生成jquery SDK
+        $scope.gen_jquery = function () {
+
+            let doc = $scope.doc;
+
+            var sdkName = doc.info.title.replace(/\./g, "") + 'Client';
+
+            var fns = [];
+
+            var paths = Object.keys(doc.paths);
+
+            paths.forEach(path => {
+
+                let requestUrl = path;
+
+                let pathParams = [];
+
+                if (path.indexOf('{') > 0) {
+
+                    requestUrl = path.replace(/\{/g, '${');
+
+                    pathParams = requestUrl.split('$').filter(x => x.indexOf('{') > -1);
+                }
+
+                var methods = Object.keys(doc.paths[path]);
+
+                methods.forEach(method => {
+
+                    let k = `${path}/${method}`;
+
+                    if ($.inArray(k, $scope.clientMethods) < 0) { return; }
+
+                    let operation = doc.paths[path][method];
+
+                    let methodName = operation.operationId.replace(/\//g, '');
+
+                    let methodParams = [];
+
+                    let httpParams = [];
+
+                    if (operation.parameters != null && operation.parameters.length > 0) {
+
+                        methodParams = operation.parameters.map(x => x.name);
+
+                        methodParams.filter(x => {
+                            let isPathParamater = pathParams.filter(pp => pp.indexOf('{' + x + '}') > -1).length > 0;
+
+                            if (!isPathParamater) {
+                                httpParams.push(x);
+                            }
+                        })
+                    }
+
+                    let fn = `     this.${methodName} = function(${methodParams.length > 0 ? methodParams.join("?,") + '?' : ''}){\r\n`;
+                    fn += `         let options = {\r\n` +
+                        `               type: "${method}",\r\n` +
+                        `               url: basePath+'` + requestUrl + `',\r\n`;
+                    if (httpParams.length > 0) {
+                        let body = httpParams.map(x => x + ':' + x).join(',');
+                        fn += `               body: {${body}},\r\n`;
+                    }
+                    fn += `            };\r\n`;
+
+                    fn += `       return this.request(options);`;
+
+                    fn += ` \r\n    }`;
+
+                    fns.push(fn);
+                });
+            });
+
+            var fnStr = ` function ${sdkName}(){\r\n\r\n`
+                + `     var basePath = '${$scope.doc.schemes[0]}://${$scope.doc.host}${$scope.doc.basePath}'; \r\n\r\n`
+                + `     this.request = function(options){
+            options.contentType="application/json; charset=utf-8";
+            options.dataType="json";
+            options.beforeSend = function (xhrObj) {
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "订阅key");
+                // 如果call staging环境取消注释即可
+                // xhrObj.setRequestHeader("Ocp-Apim-Environment", "staging");
+            };
+            return $.ajax(options);
+        }\r\n\r\n`
+                + fns.join('\n\n')
+                + `} \r\n`;
+
+            return fnStr;
+        }
+    });
+</script>
