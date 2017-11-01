@@ -110,12 +110,10 @@ export class CampaignCoreGameClient {
       return this.http.delete(path, options); 
     }
 
-    public AdminGameInstance(gameId?,take?,skip?): Observable<any> {
+    public AdminGameInstance(instanceId?): Observable<any> {
       const path = `${this.basePath}/Admin/Game/Instance`;
       let requestParams = new HttpParams();
-      if (gameId !== undefined) { requestParams = requestParams.set('gameId', <any>gameId);}
-      if (take !== undefined) { requestParams = requestParams.set('take', <any>take);}
-      if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip);}
+      if (instanceId !== undefined) { requestParams = requestParams.set('instanceId', <any>instanceId);}
       let options = { params: requestParams }
       return this.http.get(path, options); 
     }
@@ -148,11 +146,12 @@ export class CampaignCoreGameClient {
       return this.http.get(path, options); 
     }
 
-    public AdminGameGet(appId?,appSecret?,take?,skip?): Observable<any> {
+    public AdminGameGet(appId?,appSecret?,gameType?,take?,skip?): Observable<any> {
       const path = `${this.basePath}/Admin/Game/Get`;
       let requestParams = new HttpParams();
       if (appId !== undefined) { requestParams = requestParams.set('appId', <any>appId);}
       if (appSecret !== undefined) { requestParams = requestParams.set('appSecret', <any>appSecret);}
+      if (gameType !== undefined) { requestParams = requestParams.set('gameType', <any>gameType);}
       if (take !== undefined) { requestParams = requestParams.set('take', <any>take);}
       if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip);}
       let options = { params: requestParams }
@@ -285,6 +284,31 @@ export class CampaignCoreGameClient {
 
     public apiGeneralPostGeneralRanking(model:any): Observable<any> {
       const path = `${this.basePath}/api/General/GeneralRanking`;
+      return this.http.post(path, model); 
+    }
+
+    public AdminGameApp(gameType?,take?,skip?): Observable<any> {
+      const path = `${this.basePath}/Admin/Game/App`;
+      let requestParams = new HttpParams();
+      if (gameType !== undefined) { requestParams = requestParams.set('gameType', <any>gameType);}
+      if (take !== undefined) { requestParams = requestParams.set('take', <any>take);}
+      if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip);}
+      let options = { params: requestParams }
+      return this.http.get(path, options); 
+    }
+
+    public AdminGameInstances(gameId?,take?,skip?): Observable<any> {
+      const path = `${this.basePath}/Admin/Game/Instances`;
+      let requestParams = new HttpParams();
+      if (gameId !== undefined) { requestParams = requestParams.set('gameId', <any>gameId);}
+      if (take !== undefined) { requestParams = requestParams.set('take', <any>take);}
+      if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip);}
+      let options = { params: requestParams }
+      return this.http.get(path, options); 
+    }
+
+    public AdminGameAttachment(model:any): Observable<any> {
+      const path = `${this.basePath}/Admin/Game/Attachment`;
       return this.http.post(path, model); 
     }
  }
