@@ -9,11 +9,12 @@ export class CampaignCoreIdentityClient {
     constructor(protected http: HttpClient) {
     }
 
-    public ApiResourceGet(skip?, take?): Observable<any> {
+    public ApiResourceGet(skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/ApiResource`;
         let requestParams = new HttpParams();
         if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip); }
         if (take !== undefined) { requestParams = requestParams.set('take', <any>take); }
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
         let options = { params: requestParams }
         return this.http.get(path, options);
     }
@@ -28,21 +29,30 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public ApiResourceDetail(id?): Observable<any> {
+    public ApiResourceDetail(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/ApiResource/${id}`;
-        return this.http.get(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
     }
 
-    public ApiResourceDelete(id?): Observable<any> {
+    public ApiResourceDelete(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/ApiResource/${id}`;
-        return this.http.delete(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.delete(path, options);
     }
 
-    public ClientGet(skip?, take?): Observable<any> {
+    public ClientGet(ClientID?, ClientName?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Client`;
         let requestParams = new HttpParams();
+        if (ClientID !== undefined) { requestParams = requestParams.set('query.ClientID', <any>ClientID); }
+        if (ClientName !== undefined) { requestParams = requestParams.set('query.ClientName', <any>ClientName); }
         if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip); }
         if (take !== undefined) { requestParams = requestParams.set('take', <any>take); }
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
         let options = { params: requestParams }
         return this.http.get(path, options);
     }
@@ -57,21 +67,28 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public ClientDetail(id?): Observable<any> {
+    public ClientDetail(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Client/${id}`;
-        return this.http.get(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
     }
 
-    public ClientDelete(id?): Observable<any> {
+    public ClientDelete(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Client/${id}`;
-        return this.http.delete(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.delete(path, options);
     }
 
-    public IdentityResourceGet(skip?, take?): Observable<any> {
+    public IdentityResourceGet(skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/IdentityResource`;
         let requestParams = new HttpParams();
         if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip); }
         if (take !== undefined) { requestParams = requestParams.set('take', <any>take); }
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
         let options = { params: requestParams }
         return this.http.get(path, options);
     }
@@ -86,21 +103,28 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public IdentityResourceDetail(id?): Observable<any> {
+    public IdentityResourceDetail(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/IdentityResource/${id}`;
-        return this.http.get(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
     }
 
-    public IdentityResourceDelete(id?): Observable<any> {
+    public IdentityResourceDelete(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/IdentityResource/${id}`;
-        return this.http.delete(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.delete(path, options);
     }
 
-    public RoleGet(skip?, take?): Observable<any> {
+    public RoleGet(skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Role`;
         let requestParams = new HttpParams();
         if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip); }
         if (take !== undefined) { requestParams = requestParams.set('take', <any>take); }
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
         let options = { params: requestParams }
         return this.http.get(path, options);
     }
@@ -115,21 +139,32 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public RoleDetail(id?): Observable<any> {
+    public RoleDetail(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Role/${id}`;
-        return this.http.get(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
     }
 
-    public RoleDelete(id?): Observable<any> {
+    public RoleDelete(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Role/${id}`;
-        return this.http.delete(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.delete(path, options);
     }
 
-    public UserGet(skip?, take?): Observable<any> {
+    public UserGet(Role?, Phone?, Name?, Email?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/User`;
         let requestParams = new HttpParams();
+        if (Role !== undefined) { requestParams = requestParams.set('query.Role', <any>Role); }
+        if (Phone !== undefined) { requestParams = requestParams.set('query.Phone', <any>Phone); }
+        if (Name !== undefined) { requestParams = requestParams.set('query.Name', <any>Name); }
+        if (Email !== undefined) { requestParams = requestParams.set('query.Email', <any>Email); }
         if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip); }
         if (take !== undefined) { requestParams = requestParams.set('take', <any>take); }
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
         let options = { params: requestParams }
         return this.http.get(path, options);
     }
@@ -144,18 +179,44 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public UserDetail(id?): Observable<any> {
+    public UserDetail(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/User/${id}`;
-        return this.http.get(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
     }
 
-    public UserDelete(id?): Observable<any> {
+    public UserDelete(id?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/User/${id}`;
-        return this.http.delete(path);
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.delete(path, options);
     }
 
     public ImagePost(model: any): Observable<any> {
         const path = `${this.basePath}/Image`;
+        return this.http.post(path, model);
+    }
+
+    public UserApplyFor(model: any): Observable<any> {
+        const path = `${this.basePath}/User/ApplyFor`;
+        return this.http.post(path, model);
+    }
+
+    public UserVerifyPhoneNumber(model: any): Observable<any> {
+        const path = `${this.basePath}/User/VerifyPhoneNumber`;
+        return this.http.post(path, model);
+    }
+
+    public FilePost(model: any): Observable<any> {
+        const path = `${this.basePath}/File`;
+        return this.http.post(path, model);
+    }
+
+    public UserVerifyEmailAddress(model: any): Observable<any> {
+        const path = `${this.basePath}/User/VerifyEmailAddress`;
         return this.http.post(path, model);
     }
 }
