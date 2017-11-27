@@ -45,11 +45,13 @@ export class CampaignCoreIdentityClient {
         return this.http.delete(path, options);
     }
 
-    public ClientGet(ClientID?, ClientName?, skip?, take?, apiVersion?): Observable<any> {
+    public ClientGet(ClientID?, ClientName?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Client`;
         let requestParams = new HttpParams();
-        if (ClientID !== undefined) { requestParams = requestParams.set('query.ClientID', <any>ClientID); }
-        if (ClientName !== undefined) { requestParams = requestParams.set('query.ClientName', <any>ClientName); }
+        if (ClientID !== undefined) { requestParams = requestParams.set('q.ClientID', <any>ClientID); }
+        if (ClientName !== undefined) { requestParams = requestParams.set('q.ClientName', <any>ClientName); }
+        if (orderby !== undefined) { requestParams = requestParams.set('orderby', <any>orderby); }
+        if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc); }
         if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip); }
         if (take !== undefined) { requestParams = requestParams.set('take', <any>take); }
         if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
@@ -155,13 +157,15 @@ export class CampaignCoreIdentityClient {
         return this.http.delete(path, options);
     }
 
-    public UserGet(Role?, Phone?, Name?, Email?, skip?, take?, apiVersion?): Observable<any> {
+    public UserGet(Role?, PhoneNumber?, Name?, Email?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/User`;
         let requestParams = new HttpParams();
-        if (Role !== undefined) { requestParams = requestParams.set('query.Role', <any>Role); }
-        if (Phone !== undefined) { requestParams = requestParams.set('query.Phone', <any>Phone); }
-        if (Name !== undefined) { requestParams = requestParams.set('query.Name', <any>Name); }
-        if (Email !== undefined) { requestParams = requestParams.set('query.Email', <any>Email); }
+        if (Role !== undefined) { requestParams = requestParams.set('q.Role', <any>Role); }
+        if (PhoneNumber !== undefined) { requestParams = requestParams.set('q.PhoneNumber', <any>PhoneNumber); }
+        if (Name !== undefined) { requestParams = requestParams.set('q.Name', <any>Name); }
+        if (Email !== undefined) { requestParams = requestParams.set('q.Email', <any>Email); }
+        if (orderby !== undefined) { requestParams = requestParams.set('orderby', <any>orderby); }
+        if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc); }
         if (skip !== undefined) { requestParams = requestParams.set('skip', <any>skip); }
         if (take !== undefined) { requestParams = requestParams.set('take', <any>take); }
         if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
@@ -218,5 +222,14 @@ export class CampaignCoreIdentityClient {
     public UserVerifyEmailAddress(model: any): Observable<any> {
         const path = `${this.basePath}/User/VerifyEmailAddress`;
         return this.http.post(path, model);
+    }
+
+    public UserHead(PhoneNumber?, apiVersion?): Observable<any> {
+        const path = `${this.basePath}/User/Head`;
+        let requestParams = new HttpParams();
+        if (PhoneNumber !== undefined) { requestParams = requestParams.set('PhoneNumber', <any>PhoneNumber); }
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
     }
 }
