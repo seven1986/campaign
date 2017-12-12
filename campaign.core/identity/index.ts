@@ -19,7 +19,7 @@ export class CampaignCoreIdentityClient {
       return this.http.post(path, model); 
     }
 
-    public ApiResourceGet(asc?,skip?,take?,q_Name?,orderby?,apiVersion?): Observable<any> {
+    public ApiResourceGet(q_Name?,orderby?,asc?,skip?,take?,apiVersion?): Observable<any> {
       const path = `${this.basePath}/ApiResource`;
       let requestParams = new HttpParams();
       if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc);}
@@ -58,7 +58,7 @@ export class CampaignCoreIdentityClient {
       return this.http.post(path, model); 
     }
 
-    public ClientGet(asc?,skip?,take?,q_ClientID?,q_ClientName?,orderby?,apiVersion?): Observable<any> {
+    public ClientGet(q_ClientID?, q_ClientName?,orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
       const path = `${this.basePath}/Client`;
       let requestParams = new HttpParams();
       if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc);}
@@ -98,7 +98,7 @@ export class CampaignCoreIdentityClient {
       return this.http.post(path, model); 
     }
 
-    public IdentityResourceGet(asc?, skip?, take?,q_Name?,orderby?,apiVersion?): Observable<any> {
+    public IdentityResourceGet(q_Name?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
       const path = `${this.basePath}/IdentityResource`;
       let requestParams = new HttpParams();
       if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc);}
@@ -171,7 +171,7 @@ export class CampaignCoreIdentityClient {
       return this.http.post(path, model); 
     }
 
-    public UserGet(q_Role?, asc?, skip?, take?, q_PhoneNumber?, q_Name?,q_Email?,orderby?,apiVersion?): Observable<any> {
+    public UserGet(q_Role?, q_PhoneNumber?, q_Name?, q_Email?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
       const path = `${this.basePath}/User`;
       let requestParams = new HttpParams();
       if (q_Role !== undefined) { requestParams = requestParams.set('q.Role', <any>q_Role);}
@@ -228,7 +228,7 @@ export class CampaignCoreIdentityClient {
       return this.http.post(path, model); 
     }
 
-    public TenancyGet(asc?, skip?, take?,q_Host?,orderby?,apiVersion?): Observable<any> {
+    public TenancyGet(q_Host?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
       const path = `${this.basePath}/Tenancy`;
       let requestParams = new HttpParams();
       if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc);}
