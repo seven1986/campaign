@@ -21,7 +21,7 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public ApiResourceGet(q_Name?, asc?, skip?, take?, orderby?, apiVersion?): Observable<any> {
+    public ApiResourceGet(q_Name?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/ApiResource`;
         let requestParams = new HttpParams();
         if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc); }
@@ -60,7 +60,7 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public ClientGet(q_ClientID?, q_ClientName?, asc?, skip?, take?, orderby?, apiVersion?): Observable<any> {
+    public ClientGet(q_ClientID?, q_ClientName?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Client`;
         let requestParams = new HttpParams();
         if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc); }
@@ -100,7 +100,7 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public IdentityResourceGet(q_Name?, asc?, skip?, take?, orderby?, apiVersion?): Observable<any> {
+    public IdentityResourceGet(q_Name?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/IdentityResource`;
         let requestParams = new HttpParams();
         if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc); }
@@ -173,7 +173,7 @@ export class CampaignCoreIdentityClient {
         return this.http.post(path, model);
     }
 
-    public UserGet(q_PhoneNumber?, q_Name?, q_Email?, q_Role?, asc?, skip?, take?, orderby?, apiVersion?): Observable<any> {
+    public UserGet(q_Role?, q_PhoneNumber?, q_Name?, q_Email?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/User`;
         let requestParams = new HttpParams();
         if (q_Role !== undefined) { requestParams = requestParams.set('q.Role', <any>q_Role); }
@@ -239,7 +239,7 @@ export class CampaignCoreIdentityClient {
         return this.http.get(path, options);
     }
 
-    public TenantGet(q_Host?, asc?, skip?, take?, orderby?, apiVersion?): Observable<any> {
+    public TenantGet(q_Host?, orderby?, asc?, skip?, take?, apiVersion?): Observable<any> {
         const path = `${this.basePath}/Tenant`;
         let requestParams = new HttpParams();
         if (asc !== undefined) { requestParams = requestParams.set('asc', <any>asc); }
@@ -282,6 +282,27 @@ export class CampaignCoreIdentityClient {
         const path = `${this.basePath}/Tenant/Info`;
         let requestParams = new HttpParams();
         if (host !== undefined) { requestParams = requestParams.set('host', <any>host); }
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
+    }
+
+    public ApiResourcePublish(model: any): Observable<any> {
+        const path = `${this.basePath}/ApiResource/Publish`;
+        return this.http.put(path, model);
+    }
+
+    public ApiResourceProducts(apiVersion ?): Observable<any> {
+        const path = `${this.basePath}/ApiResource/Products`;
+        let requestParams = new HttpParams();
+        if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
+        let options = { params: requestParams }
+        return this.http.get(path, options);
+    }
+
+    public ApiResourcePublishSetting(id?, apiVersion?): Observable<any> {
+        const path = `${this.basePath}/ApiResource/PublishSetting/${id}`;
+        let requestParams = new HttpParams();
         if (apiVersion !== undefined) { requestParams = requestParams.set('api-version', <any>apiVersion); }
         let options = { params: requestParams }
         return this.http.get(path, options);
